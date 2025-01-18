@@ -1,0 +1,522 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Farmer Page</title>
+    {% load static %}
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f9;
+            color: #333;
+            height:100%;
+            width:100%;
+            background-image: url("{% static 'files/fback.jpg' %}");
+            background-size: cover;
+            background-repeat:no-repeat;
+        }
+
+        header {
+            background-color: lightseagreen;
+            color: white;
+            padding: 10px 20px;
+            text-align: center;
+        }
+
+        nav {
+            display: flex;
+            justify-content:center;
+            gap: 15px;
+            padding: 10px 0;
+        }
+
+        nav button {
+            padding: 12px 24px;
+            font-size: 16px;
+            cursor: pointer;
+            border: none;
+            border-radius: 25px;
+            background: linear-gradient(135deg, lightseagreen, darkturquoise);
+            color: white;
+            font-weight: bold;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: transform 0.2s ease-in-out, background 0.2s ease-in-out;
+        }
+
+        nav button:hover {
+            background: linear-gradient(135deg, violet,plum);
+            transform: scale(1.1);
+        }
+
+        .container {
+            max-width: 950px;
+            margin: 20px auto;
+            padding: 20px;
+            background: white;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+        }
+
+        .form-title {
+            font-size: 20px;
+            margin-bottom: 15px;
+            text-align: center;
+            color: lightseagreen;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        label {
+            font-weight: bold;
+        }
+
+        input, select, textarea {
+            padding: 10px;
+            font-size: 16px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            width: 97.5%;
+        }
+
+        textarea {
+            resize: vertical;
+        }
+
+        button[type="submit"] {
+            background-color: lightseagreen;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+
+        button[type="submit"]:hover {
+            background-color: plum;
+        }
+
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        ul li {
+            background: #f4f4f9;
+            padding: 15px;
+            margin: 10px 0;
+            border-radius: 5px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .offer-details button {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            font-size: 14px;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+
+        .offer-details button:hover {
+            background-color: #0056b3;
+        }
+
+        .status{
+            display: inline-block;       
+            padding: 10px 20px;          
+            background-color: #D3D3D3;              
+            font-size: 16px;            
+            font-weight: bold;          
+            text-align: center;         
+            border-radius: 5px;         
+            border: none;               
+            cursor: default;            
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); 
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 15px;
+        }
+
+        table, th, td {
+            border: 1px solid #ddd;
+            text-align: center;
+        }
+
+        th, td {
+            padding: 12px;
+        }
+
+        th {
+            background-color: #f7f7f7;
+        }
+
+        a {
+            color: lightseagreen;        
+            font-weight: bold;  
+            text-decoration: none; 
+        }
+
+        .chat-container {
+            width: 80%;
+            max-width: 600px;
+            margin: 20px auto;
+            background: #ffffff; /* Black container */
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.7);
+            border-radius: 12px;
+            overflow: hidden;
+            border: 1px solid #444;
+        }
+
+        .chat-header {
+            background: linear-gradient(90deg, #ff6b6b, #f06595); /* Vibrant pink gradient */
+            color: #ffffff;
+            padding: 20px;
+            text-align: center;
+            font-size: 24px;
+            font-weight: 600;
+            letter-spacing: 1px;
+            border-bottom: 1px solid #444;
+        }
+
+        .chat-messages {
+            max-height: 500px;
+            overflow-y: auto;
+            padding: 20px;
+            background: #1f2937; /* Dark gray background for messages */
+        }
+
+        .chat-messages::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        .chat-messages::-webkit-scrollbar-thumb {
+            background-color: #64748b;
+            border-radius: 4px;
+        }
+
+        .chat-messages::-webkit-scrollbar-track {
+            background: transparent;
+        }
+
+        .chat-input {
+            display: flex;
+            padding: 20px;
+            border-top: 1px solid #444;
+            background: #000000;
+        }
+
+        .chat-input input {
+            flex: 1;
+            padding: 14px;
+            border: 1px solid #bbb;
+            border-radius: 24px;
+            font-size: 16px;
+            outline: none;
+            transition: border-color 0.3s, box-shadow 0.3s;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            background: #1e293b; /* Dark input field */
+            color: #ffffff;
+        }
+
+        .chat-input input:focus {
+            border-color: #38bdf8;
+            box-shadow: 0 2px 6px rgba(56, 189, 248, 0.3);
+        }
+
+        .chat-input button {
+            background: linear-gradient(90deg, #38bdf8, #0ea5e9); /* Blue gradient for button */
+            color: #ffffff;
+            border: none;
+            padding: 14px 24px;
+            margin-left: 10px;
+            cursor: pointer;
+            border-radius: 24px;
+            font-size: 16px;
+            font-weight: 500;
+            transition: background 0.3s, box-shadow 0.3s;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .chat-input button:hover {
+            background: linear-gradient(90deg, #0ea5e9, #0284c7);
+            box-shadow: 0 2px 6px rgba(2, 132, 199, 0.3);
+        }
+
+        .message {
+            margin-bottom: 16px;
+            display: flex;
+            align-items: flex-start;
+        }
+
+        .message-bubble {
+            padding: 14px 18px;
+            border-radius: 18px;
+            max-width: 80%;
+            font-size: 15px;
+            line-height: 1.6;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+        }
+
+        .message.user {
+            justify-content: flex-end;
+        }
+
+        .message.user .message-bubble {
+            background: linear-gradient(90deg, #38bdf8, #0ea5e9); /* Blue gradient for user messages */
+            color: #ffffff;
+        }
+
+        .message.assistant {
+            justify-content: flex-start;
+        }
+
+        .message.assistant .message-bubble {
+            background: linear-gradient(90deg, plum, violet); /* Green gradient for assistant messages */
+            color: #ffffff;
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 20px;
+            color: white;
+        }
+
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Farmer Page</h1>
+    </header>
+    <nav>
+        <button onclick="showSection('dashboard')">Dashboard</button>
+        <button onclick="showSection('industryOffers')">Industry Offers</button>
+        <button onclick="showSection('transaction')">Transactions</button>
+        <button onclick="showSection('feedback')">Feedback</button>
+        <button onclick="showSection('chatbot')" id="cbt">FAQ's</button>
+        <button onclick="logout()">Logout</button>
+    </nav>
+
+    <!-- Dashboard -->
+    <div class="container" id="dashboard" style="display: block;">
+        <h2 class="form-title">Welcome to the Dashboard</h2>
+        <p>View your latest requests here.</p>
+        <ul>
+            {% for r in requests %}
+                <li class="offer-details">
+                    <p><strong>Industry Name:</strong> {{r.industryName}} </p>
+                    <p><strong>Material Type:</strong> {{r.materialType}} </p>
+                    <p><strong>Quantity:</strong> {{r.quantityAvailable}} Quintals</p>
+                    <p><strong>Total Price:</strong> ₹{{r.totalPrice}}</p>
+                    <p><strong>Request Status:</strong>&nbsp;&nbsp;&nbsp;<span class = "status">{{r.status}}</span></p>
+                </li>
+            {% endfor %}
+        </ul>
+    </div>
+
+    <!-- Industry Offers -->
+    <div class="container" id="industryOffers" style="display: none;">
+        <h2 class="form-title">Industry Offers</h2>
+        <p>Industry has posted the following requirements:</p>
+        <ul>
+            {% for offer in offers %}
+                <li class="offer-details">
+                    <p><strong>Industry Name:</strong> {{offer.industryName}} </p>
+                    <p><strong>Material Type:</strong> {{offer.materialType}} </p>
+                    <p><strong>Price Offered:</strong> ₹{{offer.priceOffered}} for Quintal</p>
+                    <p><strong>Quantity Required:</strong> {{offer.quantityRequired}} Quintals</p>
+                    <button onclick="showRequestForm('{{offer.industryName}}','{{offer.materialType}}',{{offer.priceOffered}},{{offer.quantityRequired}})">Select</button>
+                </li>
+            {% endfor %}
+        </ul>
+    </div>
+
+    <!-- Transaction -->
+    <div class="container" id="transaction" style="display: none;">
+        <h2 class="form-title">Transaction Details</h2>
+        <p>Transaction History:</p>
+        <table>
+            <tr>
+                <th>Transaction ID</th>
+                <th>Date and Time</th>
+                <th>Industry Name</th>
+                <th>Material</th>
+                <th>Quantity(Q)</th>
+                <th>Amount(Rs)</th>
+                <th>Proof</th>
+            </tr>
+            {% for t in trans %}
+                <tr>
+                    <td>{{t.txn_id}}</td>
+                    <td>{{t.Date}}</td>
+                    <td>{{t.industryName}}</td>
+                    <td>{{t.materialType}}</td>
+                    <td>{{t.quantity}}</td>
+                    <td>{{t.amount}}</td>
+                    <td>
+                        <img src="{{t.ss.url}}" height="200px" width="200px"><br>
+                        <a href="{{ t.ss.url }}" download><small>Download Here</small></a>
+                        <! embed src="{{ t.ss.url }}" type="image/jpeg" width="200" height="200">
+                        <!<embed src="{{ t.ss.url }}" width="500" height="400" type="application/pdf">
+                    </td>
+                </tr>
+            {% endfor %}   
+        </table>
+    </div>
+
+    <!-- Feedback -->
+    <div class="container" id="feedback" style="display: none;">
+        <h2 class="form-title">Feedback</h2>
+        <form id="feedbackForm" action="{% url 'Feedback' %}" method='POST'>
+            {% csrf_token %}
+            <input type = "hidden" name = "utype" value = "Farmer">
+            <label for="feed">Feedback:</label>
+            <textarea id="feed" name="feed" rows="4" placeholder="Share your experience or suggestions..." required></textarea>
+            <button type="submit">Submit Feedback</button>
+        </form>
+    </div>
+
+    <!-- FAQ -->
+    <div class="container chat-container" id="chatbot" style="display: none;">
+        <div class="chat-header">Chat with Nekoma..</div>
+        <div class="chat-messages" id="chat-messages"></div>
+        <div class="chat-input">
+            <input type="text" id="user-input" placeholder="Type your message here...">
+            <button onclick="sendMessage()">Send</button>
+        </div>
+    </div>
+
+    <!-- Request Form (after selecting Industry Offer) -->
+    <div class="container" id="requestForm" style="display: none;">
+        <h2 class="form-title">Send Request to Industry</h2>
+        <form id="requestFormDetails" action="{% url 'Farmer Page' %}" method="POST" onsubmit="return check(event)">
+            {% csrf_token %}
+            <label for="farmerName">Farmer Name:</label>
+            <input type="text" id="farmerName" name="farmerName" value = "{{name}}" readonly>
+
+            <input type="hidden" id="industryName" name="industryName">
+            <input type="hidden" id="materialType" name="materialType">
+            <input type="hidden" id="priceOffered" name="priceOffered">
+            <input type="hidden" id="quantityRequired" name="quantityRequired">
+            
+            <label for="quantityAvailable">Quantity:</label>
+            <input type="number" id="quantityAvailable" name="quantityAvailable" required>
+
+            <label for="phoneNumber">Phone Number:</label>
+            <input type="tel" id="phoneNumber" name="phoneNumber" required>
+
+            <label for="upiID">UPI ID:</label>
+            <input type="text" id="upiID" name="upiID" required>
+
+            <button type="submit">Send Request</button>
+        </form>
+    </div>
+
+    <footer>
+        &copy; 2024 Farmer Management System. All rights reserved.
+    </footer>
+
+    <script>
+        function showSection(sectionId) {
+            document.querySelectorAll('.container').forEach(container => {
+                container.style.display = 'none';
+            });
+            document.getElementById(sectionId).style.display = 'block';
+        }
+
+        function showRequestForm(industryName,materialType,priceOffered,quantityRequired) {
+            document.getElementById('industryOffers').style.display = 'none';
+            document.getElementById('requestForm').style.display = 'block';
+            
+            //set values for industryName and materialType
+            document.getElementById('industryName').value = industryName;
+            document.getElementById('materialType').value = materialType;
+            document.getElementById('priceOffered').value = priceOffered;
+            document.getElementById('quantityRequired').value = quantityRequired;
+        }
+
+        function check(event){
+            var req = parseInt(document.getElementById("quantityRequired").value);
+            var avail = parseInt(document.getElementById("quantityAvailable").value);
+            event.preventDefault();
+            if(req < avail){
+                alert("Please check the required quantity");
+            }
+            else{
+                event.target.submit();
+            }
+        }
+
+        function logout() {
+            window.location.href="{% url 'logout' %}"
+        }
+
+        window.addEventListener('load', function () {
+            const elements = document.querySelectorAll('.status');
+            elements.forEach((s) => {
+                if(s.textContent === "Accepted"){
+                    s.style.backgroundColor = 'green';
+                    s.style.color = 'white';
+                }
+            });
+        });
+
+        const chatMessages = document.getElementById('chat-messages');
+    
+        function appendMessage(content, isUser = true) {
+            const messageDiv = document.createElement('div');
+            messageDiv.classList.add('message', isUser ? 'user' : 'assistant');
+    
+            const bubble = document.createElement('div');
+            bubble.classList.add('message-bubble');
+            bubble.textContent = content;
+    
+            messageDiv.appendChild(bubble);
+            chatMessages.appendChild(messageDiv);
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+        }
+    
+        async function sendMessage() {
+            const userInput = document.getElementById('user-input');
+            const message = userInput.value.trim();
+    
+            if (!message) return;
+    
+            appendMessage(message, true);
+            userInput.value = '';
+    
+            try {
+                const response = await fetch('/chat/', {
+                    method: 'POST',
+                    headers: {
+                        'X-CSRFToken': document.querySelector('[name=csrfmiddlewaretoken]').value,
+                        'Content-Type': 'application/x-www-form-urlencoded'
+                    },
+                    body: new URLSearchParams({ message })
+                });
+    
+                const data = await response.json();
+                appendMessage(data.reply, false);
+            } catch (error) {
+                appendMessage('Error: Unable to connect to server.', false);
+            }
+        }
+        
+        // Initialize the chatbot with the assistant's greeting message
+        window.onload = function() {
+            appendMessage("Hi! I am Nekoma..", false);
+        };
+    </script>
+</body>
+</html>

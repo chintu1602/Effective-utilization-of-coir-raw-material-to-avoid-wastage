@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Payment Page</title>
+    <style>
+        /* General Reset */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #f3ec78, #af4261);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            color: #333;
+        }
+
+        .payment-container {
+            background-color: #ffffff;
+            border-radius: 12px;
+            box-shadow: 0 6px 30px rgba(0, 0, 0, 0.2);
+            padding: 30px 40px;
+            text-align: center;
+            max-width: 500px;
+            width: 90%;
+            border-top: 4px solid #af4261;
+        }
+
+        h1 {
+            font-size: 28px;
+            color: #2c3e50;
+            margin-bottom: 20px;
+        }
+
+        p {
+            font-size: 18px;
+            margin-bottom: 15px;
+        }
+
+        strong {
+            color: #e63946;
+        }
+
+        #qr {
+            margin-top: 20px;
+        }
+
+        img {
+            max-width: 200px;
+            width: 100%;
+            height: auto;
+            border-radius: 10px;
+            margin-bottom: 15px;
+            border: 2px solid #e63946;
+            background-color: #fff3f3;
+            padding: 5px;
+        }
+
+        button {
+            background: linear-gradient(90deg, #ff6f61, #e63946);
+            color: #ffffff;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: bold;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+        }
+
+        button:hover {
+            background: linear-gradient(90deg, #e63946, #ff6f61);
+            transition: background-color 0.3s ease-in-out;
+        }
+
+        #confirm {
+            margin-top: 20px;
+        }
+
+        label {
+            font-size: 16px;
+            margin-bottom: 8px;
+            display: block;
+            text-align: left;
+        }
+
+        input[type="text"], 
+        input[type="file"] {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 15px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+        }
+
+        input[type="text"]:focus, 
+        input[type="file"]:focus {
+            border-color: #e63946;
+            outline: none;
+            box-shadow: 0 0 5px rgba(230, 57, 70, 0.4);
+        }
+
+        form button {
+            background: linear-gradient(90deg, #52b788, #34a853);
+        }
+
+        form button:hover {
+            background: linear-gradient(90deg, #34a853, #52b788);
+        }
+
+        .footer {
+            margin-top: 20px;
+            font-size: 14px;
+            color: #555;
+        }
+    </style>
+</head>
+<body>
+    <div class="payment-container">
+        <h1>Payment Details</h1>
+        <p><strong>Name:</strong> {{y.farmerName}}</p>
+        <p><strong>UPI ID:</strong> {{ upi_id }}</p>
+        <p><strong>Amount:</strong> ₹{{ amount }}</p>
+
+        <div id="qr">
+            <p>Scan this QR code to pay:</p>
+            <img src="data:image/png;base64,{{ qr_code }}" alt="UPI QR Code">
+            <button onclick="verify()">Next</button>
+        </div>
+
+        <div id="confirm" style="display:none;">
+            <form action="{% url 'confirm_payment' %}" method="POST" enctype="multipart/form-data" onsubmit="return mess(event)">
+                {% csrf_token %}
+                <input type="hidden" id="fname" name = "fname" value="{{y.farmerName}}">
+                <input type="hidden" id="iname" name = "iname" value="{{y.industryName}}">
+                <input type="hidden" id="mtype" name = "mtype" value="{{y.materialType}}">
+                <label for="txn_id">Transaction ID:</label>
+                <input type="text" name="txn_id" id="txn_id" required>
+                <label for="ss">Screen Shot:</label>
+                <input type="file" name="ss" id="ss" accept="image/*">
+                <small style="display: block; margin-top: 5px; color: #e63946;">Only image files (e.g., .jpg, .png, .gif, .webp) are allowed.</small><br>
+                <button type="submit">Confirm Payment</button>
+            </form>
+        </div>
+        <p class="footer">Ensure your payment details are correct before proceeding.</p>
+        <p style="color:#90EE90;display:none;" id="m">Submitted Successfully</p>
+    </div>
+
+    <script>
+        function verify(){
+            const confirmation = confirm("Confirm your payment?");
+            if(confirmation){
+                document.getElementById("qr").style.display = "none";
+                document.getElementById("confirm").style.display = "block";
+            }
+        }
+
+        function mess(event){
+            event.preventDefault();
+            document.getElementById("m").style.display = "block";
+            event.target.submit();
+        }
+
+        setTimeout(function() {
+            window.location.href = document.referrer; // Redirect back to the previous page
+        }, 600000); // Redirect after 10 minutes
+    </script>
+</body>
+</html>

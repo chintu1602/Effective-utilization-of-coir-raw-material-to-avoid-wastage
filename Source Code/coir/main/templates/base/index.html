@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Main Page</title>
+    {% load static %}
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height:100%;
+            width:100%;
+            background-image: linear-gradient(rgba(0,0,0,0.4),rgba(0,0,0,0.4)),url("{% static 'files/connect.jpg' %}");
+            background-size: cover;
+        }
+        .login-container {
+            background: black;
+            opacity:0.7;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            width: 80%;
+            max-width: 600px;
+            text-align: center;
+        }
+        h1{
+            color: powderblue;
+            margin-bottom: 20px;
+            font-size: 2em;
+        }
+        h2,p{
+            color:white;
+        }
+        .login-buttons {
+            display: flex;
+            justify-content: space-evenly;
+            margin-top: 20px;
+        }
+        .login-button {
+            background-color: lightcoral;
+            color: white;
+            font-size: 1.1em;
+            padding: 15px 25px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            width: 30%;
+        }
+        .login-button:hover {
+            background-color: #45a049;
+        }
+        .video-container {
+            margin-top: 30px;
+        }
+        video {
+            width: 100%;
+            border-radius: 10px;
+        }
+        .footer {
+            margin-top: 20px;
+            color: #555;
+            font-size: 0.9em;
+        }
+    </style>
+</head>
+<body>
+    <div class="login-container">
+        <h1>Welcome to Coir Connect</h1>
+        <p>Please select your login type</p>
+        
+        <div class="login-buttons">
+            <button class="login-button" onclick="flog()">Farmer Login</button>
+            <button class="login-button" onclick="ilog()">Industry Login</button>
+            <button class="login-button" onclick="dlog()">Data Analyst Login</button>
+        </div>
+
+        <div class="video-container">
+            <h2>Watch the Demo</h2>
+            <video controls>
+                <source src="demo-video.mp4" type="video/mp4">
+                Your browser does not support the video tag.
+            </video>
+        </div>
+        
+        <div class="footer">
+            <p>&copy; 2024 Our Platform. All Rights Reserved.</p>
+        </div>
+    </div>
+    <script>
+        function flog(){
+            window.location.href="{% url 'Flogin Page' %}";
+        }
+        function ilog(){
+            window.location.href="{% url 'Ilogin Page' %}";
+        }
+        function dlog(){
+            window.location.href="{% url 'Dlogin Page' %}";
+        }
+    </script>
+</body>
+</html>

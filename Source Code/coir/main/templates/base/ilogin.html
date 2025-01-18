@@ -1,0 +1,54 @@
+<html>
+    <head>
+        <title>Industry login</title>
+        {% load static %}
+        <link rel="stylesheet" href="{% static 'files/istyle.css' %}">
+    </head>
+    <body>
+        <div class="back">
+            <div class="box">
+                <center><h2>Industrialist</h2></center>
+                <div class="btn-box">
+                    <div id="btn"></div>
+                    <button type="button" class="toggle-btn" onclick="login()">Log In</button>
+                    <button type="button" class="toggle-btn" onclick="sign()">Sign Up</button>
+                </div>
+                <form id="login" class="inp" action="{% url 'Ilogin Page' %}" method='POST'>
+                    {% csrf_token %}
+                    <br><br>
+                    <input type="text" class="inp-field" id="m" name="m" placeholder="Phone Number" required>
+                    <br>
+                    <input type="password" class="inp-field" id="p" name="p"placeholder="Enter Password" required>
+                    <br><br>
+                    <button type="submit" class="sub-btn" name ="l">Log In</button>
+                </form>
+                
+                <form id="sign" class="inp" action="{% url 'Ilogin Page' %}" method='POST'>
+                    {% csrf_token %}
+                    <input type="text" class="inp-field" id="name" name="name" placeholder="Industry Name" required>
+                    <input type="hidden" name="type" value = "Industry">
+                    <input type="text" class="inp-field" id="mobile" name="mobile" placeholder="Phone Number" required>
+                    <input type="email" class="inp-field" id="email" name="email" placeholder="Email Id" required>
+                    <input type="password" class="inp-field" id="pwd" name="pwd"placeholder="Enter Password" required>
+                    <button type="submit" class="sub-btn" name="s">Sign Up</button>
+                </form>
+            </div>           
+        </div>
+        <script>
+            var x = document.getElementById("login");
+            var y = document.getElementById("sign");
+            var z = document.getElementById("btn");
+
+            function sign(){
+                x.style.left = "-400px";
+                y.style.left = "50px";
+                z.style.left = "110px";
+            }
+            function login(){
+                x.style.left = "50px";
+                y.style.left = "450px";
+                z.style.left = "0";
+            }
+        </script>
+    </body>
+</html>
